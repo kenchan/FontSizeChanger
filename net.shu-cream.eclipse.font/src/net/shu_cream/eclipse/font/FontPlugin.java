@@ -1,10 +1,19 @@
 package net.shu_cream.eclipse.font;
 
-import org.eclipse.jface.resource.FontRegistry;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.PartSite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -16,10 +25,8 @@ public class FontPlugin extends AbstractUIPlugin {
     // The shared instance.
     private static FontPlugin plugin;
 
-    private static final String SYMBOLIC_NAME = "org.eclipse.jdt.ui.editors.textfont";
-
-    private int changed = 0;
-
+    private Map<String, Integer> diffSizeMap = new HashMap<String, Integer>();
+    
     /**
      * The constructor.
      */
@@ -60,17 +67,46 @@ public class FontPlugin extends AbstractUIPlugin {
         return AbstractUIPlugin.imageDescriptorFromPlugin(
                 "net.shu_cream.eclipse.font", path);
     }
-
+    
     void changeSize(int diff) {
-        FontData fontData = this.getFontData();
+    	IWorkbenchPartSite site = getActiveSite();
+		if (!(site instanceof PartSite))return;
+		PartSite partSite = (PartSite) site;
+		String id = partSite.getId();
+		Integer value = this.diffSizeMap.get(id);
+		if(value == null){
+			this.diffSizeMap.put(id,diff);
+		}else{
+			this.diffSizeMap.put(id,value + diff);
+		}
+		Control control = partSite.getPane().getControl();
+		changeFont(diff, control);
+    }
+
+	private IWorkbenchPartSite getActiveSite() {
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+		IWorkbenchPart activePart = activePage.getActivePart();
+		IWorkbenchPartSite site = activePart.getSite();
+		return site;
+	}
+
+	private void changeFont(int diff, Control control) {
+		if (control instanceof Composite) {
+			Composite comp = (Composite) control;
+			for(Control cControl : comp.getChildren()){
+				changeFont(diff, cControl);
+			}
+		}
+		FontData fontData = control.getFont().getFontData()[0];
         int after = fontData.getHeight() + diff;
         if (after == 0) {
             return;
         }
-        this.changed += diff;
         fontData.setHeight(after);
-        this.setFontData(fontData);
-    }
+        Font font = new Font(PlatformUI.getWorkbench().getDisplay(),fontData);
+		control.setFont(font);
+	}
 
     void toLarge() {
         this.changeSize(1);
@@ -81,22 +117,11 @@ public class FontPlugin extends AbstractUIPlugin {
     }
 
     void reset() {
-        this.changeSize(-this.changed);
-        this.changed = 0;
-    }
-
-    private FontData getFontData() {
-        FontRegistry registry = JFaceResources.getFontRegistry();
-        Font font = registry.get(SYMBOLIC_NAME);
-        FontData[] fontData = font.getFontData();
-        if (fontData.length < 1) {
-            //TODO FontData not found.
-        }
-        return fontData[0];
-    }
-
-    private void setFontData(FontData fontData) {
-        JFaceResources.getFontRegistry().put(SYMBOLIC_NAME,
-                new FontData[] { fontData });
+    	String id = getActiveSite().getId();
+    	Integer value = this.diffSizeMap.get(id);
+    	if(value == null){
+    		value = 0;
+    	}
+    	this.changeSize(-value);
     }
 }
