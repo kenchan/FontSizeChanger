@@ -2,37 +2,6 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.editorActions">
-      <editorContribution
-            id="net.shu-cream.eclipse.font.editorContribution1"
-            targetID="org.eclipse.jdt.ui.CompilationUnitEditor">
-         <action
-               class="net.shu_cream.eclipse.font.ToLargeAction"
-               icon="icons/large.gif"
-               id="net.shu-cream.eclipse.font.toLargeAction"
-               label="%toLargeAction.label"
-               style="push"
-               toolbarPath="net/shu-cream/font"
-               tooltip="%toLargeAction.tooltip"/>
-         <action
-               class="net.shu_cream.eclipse.font.ToSmallAction"
-               icon="icons/small.gif"
-               id="net.shu-cream.eclipse.font.toSmallAction"
-               label="%toSmallAction.label"
-               style="push"
-               toolbarPath="net/shu-cream/font"
-               tooltip="%toSmallAction.tooltip"/>
-         <action
-               class="net.shu_cream.eclipse.font.ResetAction"
-               icon="icons/reset.gif"
-               id="net.shu-cream.eclipse.font.resetAction"
-               label="%resetAction.label"
-               style="push"
-               toolbarPath="net/shu-cream/font"
-               tooltip="%resetAction.tooltip"/>
-      </editorContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
