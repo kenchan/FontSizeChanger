@@ -71,5 +71,20 @@
             commandId="net.shu_cream.eclipse.font.reset">
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="net.shu_cream.eclipse.font.large"
+            contextId="org.eclipse.ui.contexts.dialogAndWindow"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+;">
+      </key>
+      <key
+            commandId="net.shu_cream.eclipse.font.small"
+            contextId="org.eclipse.ui.contexts.dialogAndWindow"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+-">
+      </key>
+   </extension>
 
 </plugin>
