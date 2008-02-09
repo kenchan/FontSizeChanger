@@ -37,20 +37,24 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="net.shu_cream.eclipse.font"
+            categoryId="net.shu-cream.eclipse.font.category1"
             id="net.shu_cream.eclipse.font.large"
             name="Large">
       </command>
       <command
-            categoryId="net.shu_cream.eclipse.font"
+            categoryId="net.shu-cream.eclipse.font.category1"
             id="net.shu_cream.eclipse.font.small"
             name="Small">
       </command>
       <command
-            categoryId="net.shu_cream.eclipse.font"
+            categoryId="net.shu-cream.eclipse.font.category1"
             id="net.shu_cream.eclipse.font.reset"
             name="Reset">
       </command>
+      <category
+            id="net.shu-cream.eclipse.font.category1"
+            name="FontSizeChanger">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
