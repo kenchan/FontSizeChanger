@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: net.shu_cream.eclipse.font.test
+Bundle-Version: 1.0.0
+Bundle-Activator: net.shu_cream.eclipse.font.test.TestActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit4,
+ net.shu_cream.eclipse.font
+Eclipse-LazyStart: true
