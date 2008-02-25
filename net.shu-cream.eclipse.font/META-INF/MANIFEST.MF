@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Font Size Plug-in
 Bundle-SymbolicName: net.shu_cream.eclipse.font;singleton:=true
-Bundle-Version: 1.1.1
+Bundle-Version: 1.1.2
 Bundle-Activator: net.shu_cream.eclipse.font.FontPlugin
-Bundle-Vendor: Kenichi Takahashi
+Bundle-Vendor: Eclipse Plugin Development Session
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime
 Eclipse-LazyStart: true
