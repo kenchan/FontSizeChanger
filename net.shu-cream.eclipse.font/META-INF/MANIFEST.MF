@@ -2,9 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Font Size Plug-in
 Bundle-SymbolicName: net.shu_cream.eclipse.font;singleton:=true
-Bundle-Version: 1.1.2
+Bundle-Version: 1.1.3
 Bundle-Activator: net.shu_cream.eclipse.font.FontPlugin
 Bundle-Vendor: Eclipse Plugin Development Session
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime
 Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
