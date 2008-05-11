@@ -7,7 +7,6 @@ import org.eclipse.core.commands.ExecutionException;
 
 public class ResetHandler extends AbstractHandler {
 
-	@Override
 	public Object execute(ExecutionEvent arg0) throws ExecutionException {
 		FontPlugin.getDefault().reset();
 		return null;

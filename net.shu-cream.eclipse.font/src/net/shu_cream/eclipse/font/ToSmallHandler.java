@@ -6,7 +6,6 @@ import org.eclipse.core.commands.ExecutionException;
 
 public class ToSmallHandler extends AbstractHandler {
 
-	@Override
 	public Object execute(ExecutionEvent arg0) throws ExecutionException {
 		FontPlugin.getDefault().toSmall();
 		return null;
