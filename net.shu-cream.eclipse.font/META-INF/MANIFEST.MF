@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Font Size Plug-in
+Bundle-Name: Font Size Changer
 Bundle-SymbolicName: net.shu_cream.eclipse.font;singleton:=true
-Bundle-Version: 1.1.3
+Bundle-Version: 1.1.4
 Bundle-Activator: net.shu_cream.eclipse.font.FontPlugin
 Bundle-Vendor: Eclipse Plugin Development Session
 Bundle-Localization: plugin
