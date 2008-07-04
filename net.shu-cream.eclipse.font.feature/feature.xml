@@ -2,8 +2,9 @@
 <feature
       id="net.shu_cream.eclipse.font.feature"
       label="FontSizeChanger Feature"
-      version="1.1.2"
-      provider-name="Eclipse Plugin Development Session">
+      version="1.1.4"
+      provider-name="Eclipse Plugin Development Session"
+      plugin="net.shu_cream.eclipse.font">
 
    <description>
       This plugin makes easy to change font size.
@@ -111,7 +112,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="net.shu_cream.eclipse.font"
          download-size="0"
          install-size="0"
-         version="1.1.2"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
