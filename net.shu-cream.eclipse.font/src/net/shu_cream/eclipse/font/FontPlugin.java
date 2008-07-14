@@ -72,15 +72,26 @@ public class FontPlugin extends AbstractUIPlugin {
     	IWorkbenchPartSite site = getActiveSite();
 		if (!(site instanceof PartSite))return;
 		PartSite partSite = (PartSite) site;
-		String id = partSite.getId();
-		Integer value = this.diffSizeMap.get(id);
-		if(value == null){
-			this.diffSizeMap.put(id,diff);
-		}else{
-			this.diffSizeMap.put(id,value + diff);
-		}
 		Control control = partSite.getPane().getControl();
-		changeFont(diff, control);
+		if(changeFont(diff, control)) {
+			this.saveDiff(partSite.getId(), diff);
+		}
+    }
+    
+    /**
+     * フォントサイズ変更の履歴を記録します。
+     * Resetアクションでは、この履歴を元に変更を元の状態に戻します。
+     * 
+     * @param partSiteId 変更したPatrSiteのID
+     * @param diff 変更したサイズ
+     */
+    private void saveDiff(String partSiteId, int diff) {
+		Integer value = this.diffSizeMap.get(partSiteId);
+		if(value == null){
+			this.diffSizeMap.put(partSiteId, diff);
+		}else{
+			this.diffSizeMap.put(partSiteId, value + diff);
+		}    	
     }
 
 	private IWorkbenchPartSite getActiveSite() {
@@ -91,7 +102,16 @@ public class FontPlugin extends AbstractUIPlugin {
 		return site;
 	}
 
-	private void changeFont(int diff, Control control) {
+	/**
+	 * コントロールのフォントサイズを変更します。
+	 * フォントサイズの変更が成功した場合はtrueが、失敗した場合はfalseを返します。
+	 * 失敗する状況は、表示可能な最小フォントになっているときに、さらに小さくしようとした場合です。
+	 * 
+	 * @param diff 変更したい差分
+	 * @param control フォントサイズの変更をするコントロール
+	 * @return フォントサイズの変更が成功したらtrue、失敗したらfalse
+	 */
+	private boolean changeFont(int diff, Control control) {
 		if (control instanceof Composite) {
 			Composite comp = (Composite) control;
 			for(Control cControl : comp.getChildren()){
@@ -101,11 +121,12 @@ public class FontPlugin extends AbstractUIPlugin {
 		FontData fontData = control.getFont().getFontData()[0];
         int after = fontData.getHeight() + diff;
         if (after == 0) {
-            return;
+            return false;
         }
         fontData.setHeight(after);
         Font font = new Font(PlatformUI.getWorkbench().getDisplay(),fontData);
 		control.setFont(font);
+		return true;
 	}
 
     void toLarge() {
