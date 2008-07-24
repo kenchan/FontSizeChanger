@@ -119,14 +119,15 @@ public class FontPlugin extends AbstractUIPlugin {
 			}
 		}
 		FontData fontData = control.getFont().getFontData()[0];
-        int after = fontData.getHeight() + diff;
-        if (after == 0) {
+        int current = fontData.getHeight();
+        fontData.setHeight(current + diff);
+        Font font = new Font(PlatformUI.getWorkbench().getDisplay(), fontData);
+        control.setFont(font);
+        if(control.getFont().getFontData()[0].getHeight() == current) {
             return false;
+        } else {
+            return true;
         }
-        fontData.setHeight(after);
-        Font font = new Font(PlatformUI.getWorkbench().getDisplay(),fontData);
-		control.setFont(font);
-		return true;
 	}
 
     void toLarge() {
