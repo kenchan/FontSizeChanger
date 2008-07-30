@@ -22,80 +22,84 @@ import org.osgi.framework.BundleContext;
  */
 public class FontPlugin extends AbstractUIPlugin {
 
-    // The shared instance.
-    private static FontPlugin plugin;
+	// The shared instance.
+	private static FontPlugin plugin;
 
-    private Map<String, Integer> diffSizeMap = new HashMap<String, Integer>();
-    
-    /**
-     * The constructor.
-     */
-    public FontPlugin() {
-        plugin = this;
-    }
+	private Map<String, Integer> diffSizeMap = new HashMap<String, Integer>();
 
-    /**
-     * This method is called upon plug-in activation
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-    }
+	/**
+	 * The constructor.
+	 */
+	public FontPlugin() {
+		plugin = this;
+	}
 
-    /**
-     * This method is called when the plug-in is stopped
-     */
-    public void stop(BundleContext context) throws Exception {
-        super.stop(context);
-        plugin = null;
-    }
+	/**
+	 * This method is called upon plug-in activation
+	 */
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+	}
 
-    /**
-     * Returns the shared instance.
-     */
-    public static FontPlugin getDefault() {
-        return plugin;
-    }
+	/**
+	 * This method is called when the plug-in is stopped
+	 */
+	public void stop(BundleContext context) throws Exception {
+		super.stop(context);
+		plugin = null;
+	}
 
-    /**
-     * Returns an image descriptor for the image file at the given plug-in
-     * relative path.
-     * 
-     * @param path the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor(String path) {
-        return AbstractUIPlugin.imageDescriptorFromPlugin(
-                "net.shu_cream.eclipse.font", path);
-    }
-    
-    void changeSize(int diff) {
-    	IWorkbenchPartSite site = getActiveSite();
-		if (!(site instanceof PartSite))return;
+	/**
+	 * Returns the shared instance.
+	 */
+	public static FontPlugin getDefault() {
+		return plugin;
+	}
+
+	/**
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path.
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return AbstractUIPlugin.imageDescriptorFromPlugin(
+				"net.shu_cream.eclipse.font", path);
+	}
+
+	void changeSize(int diff) {
+		IWorkbenchPartSite site = getActiveSite();
+		if (!(site instanceof PartSite))
+			return;
 		PartSite partSite = (PartSite) site;
 		Control control = partSite.getPane().getControl();
-		if(changeFont(diff, control)) {
+		if (changeFont(diff, control)) {
 			this.saveDiff(partSite.getId(), diff);
 		}
-    }
-    
-    /**
-     * フォントサイズ変更の履歴を記録します。
-     * Resetアクションでは、この履歴を元に変更を元の状態に戻します。
-     * 
-     * @param partSiteId 変更したPatrSiteのID
-     * @param diff 変更したサイズ
-     */
-    private void saveDiff(String partSiteId, int diff) {
+	}
+
+	/**
+	 * フォントサイズ変更の履歴を記録します。 Resetアクションでは、この履歴を元に変更を元の状態に戻します。
+	 * 
+	 * @param partSiteId
+	 *            変更したPatrSiteのID
+	 * @param diff
+	 *            変更したサイズ
+	 */
+	private void saveDiff(String partSiteId, int diff) {
 		Integer value = this.diffSizeMap.get(partSiteId);
-		if(value == null){
+		if (value == null) {
 			this.diffSizeMap.put(partSiteId, diff);
-		}else{
+		} else {
 			this.diffSizeMap.put(partSiteId, value + diff);
-		}    	
-    }
+		}
+	}
 
 	private IWorkbenchPartSite getActiveSite() {
-		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
 		IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
 		IWorkbenchPart activePart = activePage.getActivePart();
 		IWorkbenchPartSite site = activePart.getSite();
@@ -103,47 +107,52 @@ public class FontPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * コントロールのフォントサイズを変更します。
-	 * フォントサイズの変更が成功した場合はtrueが、失敗した場合はfalseを返します。
+	 * コントロールのフォントサイズを変更します。 フォントサイズの変更が成功した場合はtrueが、失敗した場合はfalseを返します。
 	 * 失敗する状況は、表示可能な最小フォントになっているときに、さらに小さくしようとした場合です。
 	 * 
-	 * @param diff 変更したい差分
-	 * @param control フォントサイズの変更をするコントロール
+	 * @param diff
+	 *            変更したい差分
+	 * @param control
+	 *            フォントサイズの変更をするコントロール
 	 * @return フォントサイズの変更が成功したらtrue、失敗したらfalse
 	 */
 	private boolean changeFont(int diff, Control control) {
 		if (control instanceof Composite) {
 			Composite comp = (Composite) control;
-			for(Control cControl : comp.getChildren()){
-				changeFont(diff, cControl);
+			for (Control cControl : comp.getChildren()) {
+				return changeFont(diff, cControl);
 			}
 		}
 		FontData fontData = control.getFont().getFontData()[0];
-        int current = fontData.getHeight();
-        fontData.setHeight(current + diff);
-        Font font = new Font(PlatformUI.getWorkbench().getDisplay(), fontData);
-        control.setFont(font);
-        if(control.getFont().getFontData()[0].getHeight() == current) {
-            return false;
-        } else {
-            return true;
-        }
+		int current = fontData.getHeight();
+		if (0 < (current + diff)) {
+			fontData.setHeight(current + diff);
+			Font font = new Font(PlatformUI.getWorkbench().getDisplay(),
+					fontData);
+			control.setFont(font);
+		}
+		int after = control.getFont().getFontData()[0].getHeight();
+		if (after == current) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
-    void toLarge() {
-        this.changeSize(1);
-    }
+	void toLarge() {
+		this.changeSize(1);
+	}
 
-    void toSmall() {
-        this.changeSize(-1);
-    }
+	void toSmall() {
+		this.changeSize(-1);
+	}
 
-    void reset() {
-    	String id = getActiveSite().getId();
-    	Integer value = this.diffSizeMap.get(id);
-    	if(value == null){
-    		value = 0;
-    	}
-    	this.changeSize(-value);
-    }
+	void reset() {
+		String id = getActiveSite().getId();
+		Integer value = this.diffSizeMap.get(id);
+		if (value == null) {
+			value = 0;
+		}
+		this.changeSize(-value);
+	}
 }
