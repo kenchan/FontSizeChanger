@@ -117,10 +117,11 @@ public class FontPlugin extends AbstractUIPlugin {
 	 * @return フォントサイズの変更が成功したらtrue、失敗したらfalse
 	 */
 	private boolean changeFont(int diff, Control control) {
+	    boolean changed = false;
 		if (control instanceof Composite) {
 			Composite comp = (Composite) control;
 			for (Control cControl : comp.getChildren()) {
-				return changeFont(diff, cControl);
+				changed |= changeFont(diff, cControl);
 			}
 		}
 		FontData fontData = control.getFont().getFontData()[0];
@@ -133,7 +134,7 @@ public class FontPlugin extends AbstractUIPlugin {
 		}
 		int after = control.getFont().getFontData()[0].getHeight();
 		if (after == current) {
-			return false;
+            return changed;
 		} else {
 			return true;
 		}
