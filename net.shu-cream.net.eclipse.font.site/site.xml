@@ -6,7 +6,7 @@
    <feature url="features/net.shu_cream.eclipse.font.feature_1.1.2.jar" id="net.shu_cream.eclipse.font.feature" version="1.1.2">
       <category name="FontSizeChanger"/>
    </feature>
-   <feature url="features/net.shu_cream.eclipse.font.feature_1.1.4.jar" id="net.shu_cream.eclipse.font.feature" version="1.1.4">
+   <feature url="features/net.shu_cream.eclipse.font.feature_1.1.5.jar" id="net.shu_cream.eclipse.font.feature" version="1.1.5">
       <category name="FontSizeChanger"/>
    </feature>
    <category-def name="FontSizeChanger" label="FontSizeChanger">

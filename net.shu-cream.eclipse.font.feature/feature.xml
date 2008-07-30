@@ -2,7 +2,7 @@
 <feature
       id="net.shu_cream.eclipse.font.feature"
       label="FontSizeChanger Feature"
-      version="1.1.4"
+      version="1.1.5"
       provider-name="Eclipse Plugin Development Session"
       plugin="net.shu_cream.eclipse.font">
 
