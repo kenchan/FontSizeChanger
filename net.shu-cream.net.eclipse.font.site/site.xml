@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://eclipse-study.sourceforge.net/font-size-changer/updates/">
+      update site for FontSizeChanger
+   </description>
+   <feature url="features/net.shu_cream.eclipse.font.feature_1.1.2.jar" id="net.shu_cream.eclipse.font.feature" version="1.1.2">
+      <category name="FontSizeChanger"/>
+   </feature>
+   <feature url="features/net.shu_cream.eclipse.font.feature_1.1.5.jar" id="net.shu_cream.eclipse.font.feature" version="1.1.5">
+      <category name="FontSizeChanger"/>
+   </feature>
+   <category-def name="FontSizeChanger" label="FontSizeChanger">
+      <description>
+         This plugin makes easy to change font size.
+      </description>
+   </category-def>
+</site>
