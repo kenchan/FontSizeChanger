@@ -3,7 +3,7 @@ package net.shu_cream.eclipse.font.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import net.shu_cream.eclipse.font.ToLargeHandler;
+import net.shu_cream.eclipse.font.LargeHandler;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.jface.action.IContributionItem;
@@ -24,7 +24,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestToLargeHandler {
+public class TestLargeHandler {
 		
 	@BeforeClass
 	public void テスト実行のその前に() throws Exception{
@@ -42,7 +42,7 @@ public class TestToLargeHandler {
 		assertNotNull(command);
 		
 		Object obj = command.executeWithChecks(null);
-		assertEquals(ToLargeHandler.class,obj.getClass());
+		assertEquals(LargeHandler.class,obj.getClass());
 		command.executeWithChecks(null);
 		command.executeWithChecks(null);
 		command.executeWithChecks(null);

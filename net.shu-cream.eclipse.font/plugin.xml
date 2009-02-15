@@ -59,11 +59,11 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="net.shu_cream.eclipse.font.ToLargeHandler"
+            class="net.shu_cream.eclipse.font.LargeHandler"
             commandId="net.shu_cream.eclipse.font.large">
       </handler>
       <handler
-            class="net.shu_cream.eclipse.font.ToSmallHandler"
+            class="net.shu_cream.eclipse.font.SmallHandler"
             commandId="net.shu_cream.eclipse.font.small">
       </handler>
       <handler

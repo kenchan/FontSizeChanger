@@ -4,11 +4,12 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-public class ToSmallHandler extends AbstractHandler {
+public class LargeHandler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent arg0) throws ExecutionException {
-		FontPlugin.getDefault().toSmall();
-		return null;
+        FontPlugin.getDefault().toLarge();
+		return this;
 	}
+
 
 }
