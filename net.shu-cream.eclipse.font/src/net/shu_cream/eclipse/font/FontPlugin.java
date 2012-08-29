@@ -3,6 +3,7 @@ package net.shu_cream.eclipse.font;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -10,10 +11,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.PartPane;
 import org.eclipse.ui.internal.PartSite;
+import org.eclipse.ui.internal.WorkbenchPartReference;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -74,8 +78,12 @@ public class FontPlugin extends AbstractUIPlugin {
 		if (!(site instanceof PartSite))
 			return;
 		PartSite partSite = (PartSite) site;
-		Control control = partSite.getPane().getControl();
-		if (changeFont(diff, control)) {
+		IWorkbenchPartReference partReference = partSite.getPartReference();
+		if (!(partReference instanceof WorkbenchPartReference))
+			return;
+		WorkbenchPartReference partReferenceInstance = (WorkbenchPartReference) partReference;
+		PartPane pane = partReferenceInstance.getPane();
+		if (changeFont(diff, pane.getControl())) {
 			this.saveDiff(partSite.getId(), diff);
 		}
 	}
